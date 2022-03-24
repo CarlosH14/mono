@@ -11,6 +11,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import co.pragma.mono.dto.PersonaDTO;
 import co.pragma.mono.dto.PersonaMapper;
+import co.pragma.mono.model.ImagenMongo;
 import co.pragma.mono.model.Persona;
 import co.pragma.mono.repository.ImagenRepo;
 import co.pragma.mono.repository.PersonaRepo;
@@ -86,6 +87,14 @@ public class PersonaServ {
         if(pDTO.getTipoid()== null || pDTO.getTipoid().equals("")){
             pDTO.setTipoid(pAux.get().getTipoid());
         }
+        pDTO.setImg(pAux.get().getImg());
+        if(pDTO.getImg() != null){
+            pDTO.getImg().setImg(pDTO.getNombre()+" "+pDTO.getApellido());
+            ImagenMongo mongoAux = mongoRepo.findById(Integer.toString(pDTO.getImg().getId())).get();
+            mongoAux.setImagen(pDTO.getImg());
+            mongoRepo.save(mongoAux);
+        }
+        
         if(String.valueOf(pDTO.getNumid()).length() < 5 || String.valueOf(pDTO.getNumid()).length() > 11 ){
             pDTO.setNumid(pAux.get().getNumid());
         }
