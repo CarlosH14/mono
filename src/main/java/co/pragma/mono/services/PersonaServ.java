@@ -11,6 +11,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import co.pragma.mono.dto.PersonaDTO;
 import co.pragma.mono.dto.PersonaMapper;
+import co.pragma.mono.model.Imagen;
 import co.pragma.mono.model.ImagenMongo;
 import co.pragma.mono.model.Persona;
 import co.pragma.mono.repository.ImagenRepo;
@@ -69,6 +70,10 @@ public class PersonaServ {
         
         Optional<Persona> pAux = personaRepo.findById(id);
 
+        if (!pAux.isPresent()) {
+            throw new Exception("Persona with id " + id + " not found");
+        }
+
         if(pDTO.getNombre() == null || pDTO.getNombre().equals("")){
             pDTO.setNombre(pAux.get().getNombre());
         }
@@ -126,19 +131,14 @@ public class PersonaServ {
         if(String.valueOf(p.getNumid()).length() < 5 || String.valueOf(p.getNumid()).length() > 11 ){
             throw new Exception("ID must contain at least 5 numbers");
         }
-        if (!pAux.isPresent()){
-            throw new Exception("Persona with id " + p.getId() + " not found");
-        }
+        
         return personaRepo.save(p);
     }
     // ----------------------------------------------------------------
     // -------------------Get by id {table}----------------------------
     public Persona getbyId(int id) throws Exception{
         Optional<Persona> pAux = personaRepo.findById(id);
-        if (pAux == null || !pAux.isPresent() ) {
-            throw new Exception("Persona with id " + id + " not found");
-        }
-        if (Integer.valueOf(id)!=id){
+        if (!pAux.isPresent() ) {
             throw new Exception("Persona with id " + id + " not found");
         }
         return pAux.get();
@@ -163,7 +163,7 @@ public class PersonaServ {
     }
     // ----------------------------------------------------------------
     // ----------Get by id {persona} {/id?id=#####}--------------------
-    public ArrayList<Persona> findByNumeroid(int numeroid) throws Exception{
+    public ArrayList<Persona> findByNumeroid(Long numeroid) throws Exception{
         ArrayList<Persona> pAux = personaRepo.findByNumid(numeroid);
         if (pAux.isEmpty()) {
             throw new Exception("Persona with ID Number: " + numeroid + " not found");
@@ -172,7 +172,7 @@ public class PersonaServ {
     }
     // ----------------------------------------------------------------
     // ------Get by type & number id {persona} {/XX&####}--------------
-    public ArrayList<Persona> findByFullid(String tipoid, int numeroid) throws Exception{
+    public ArrayList<Persona> findByFullid(String tipoid, Long numeroid) throws Exception{
         ArrayList<Persona> pAux = personaRepo.findByTipoidAndNumid(tipoid, numeroid);
         if (pAux.isEmpty()) {
             throw new Exception("Persona with ID " + numeroid + " and ID Type " + tipoid + " is not found");
@@ -183,10 +183,11 @@ public class PersonaServ {
     // -------------------Delete by id {table}-------------------------
     public boolean deletePersona(int id) throws Exception{
         Optional<Persona> p = personaRepo.findById(id);
+        Optional<Imagen> i = imagenRepo.findById(p.get().getImg().getId());
         if(!p.isPresent()){
             throw new Exception("Persona with ID " + id + " not found");
         }
-        if (p.get().getImg()!=null){
+        if (i.isPresent()){
             boolean deleted = true;
             try {
                 imagenRepo.deleteById(p.get().getImg().getId());

@@ -35,13 +35,13 @@ public class Persona {
     @Column(name = "tipoid", nullable = false)
     String tipoid;
     @Column(name = "numid", nullable = false)
-    int numid;
+    Long numid;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "img")
     private Imagen img;
     
-    public Persona(String nombre, String apellido, String ciudad, int edad, String tipoid, int numid) {
+    public Persona(String nombre, String apellido, String ciudad, int edad, String tipoid, Long numid) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.ciudad = ciudad;

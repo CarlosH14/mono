@@ -16,10 +16,10 @@ public class PersonaDTO implements Serializable{
     String ciudad;
     int edad;
     String tipoid;
-    int numid;
+    Long numid;
     Imagen img;
     
-    public PersonaDTO(String nombre, String apellido, String ciudad, int edad, String tipoid, int numid) {
+    public PersonaDTO(String nombre, String apellido, String ciudad, int edad, String tipoid, Long numid) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.ciudad = ciudad;

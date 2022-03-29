@@ -119,7 +119,7 @@ public class PersonaCont {
         @ApiResponse(responseCode = "403", description = "Persona with ID number not found", content = @Content),
     })
     @GetMapping("/id")
-    public ResponseEntity<ArrayList<Persona>> findByNumeroid(@RequestParam int id) throws java.lang.Exception {
+    public ResponseEntity<ArrayList<Persona>> findByNumeroid(@RequestParam Long id) throws java.lang.Exception {
         ArrayList<Persona> pAux = serv.findByNumeroid(id);
         return new ResponseEntity<ArrayList<Persona>>(pAux, (HttpStatus.FOUND));
     }
@@ -145,7 +145,7 @@ public class PersonaCont {
     @GetMapping("/p/{requests}")
     public ResponseEntity<ArrayList<Persona>> findByFullid(@PathVariable("requests") String requests) throws java.lang.Exception{
         String[] req = requests.split("&");
-        Integer numid = Integer.parseInt(req[1]);
+        Long numid = Long.parseLong(req[1]);
         String tipoid = req[0];
         ArrayList<Persona> pAux = serv.findByFullid(tipoid, numid);
         return new ResponseEntity<ArrayList<Persona>>(pAux, (HttpStatus.FOUND));

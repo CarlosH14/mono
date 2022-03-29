@@ -20,11 +20,11 @@ public interface PersonaRepo extends JpaRepository<Persona, Integer>{
 
         //@Query(value ="SELECT * FROM persona WHERE persona.numid = ?1", nativeQuery = true)
         //ArrayList<Persona> findByNumid(int numeroid);
-        ArrayList<Persona> findByNumid(int numid);
+        ArrayList<Persona> findByNumid(Long numid);
 
         //@Query(value ="SELECT * FROM persona WHERE persona.tipoid = ?1 AND persona.numid = ?2", nativeQuery = true)
         //ArrayList<Persona> findByFullid(String tipoid, int numeroid);
-        ArrayList<Persona> findByTipoidAndNumid(String tipoid, int numid);
+        ArrayList<Persona> findByTipoidAndNumid(String tipoid, Long numid);
 
 
         //@Query(value ="SELECT * FROM persona WHERE persona.edad >= ?1", nativeQuery = true)
