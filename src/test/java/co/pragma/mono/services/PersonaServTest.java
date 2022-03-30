@@ -334,21 +334,19 @@ public class PersonaServTest {
 
     @Test
     void testDeletePersonaFail() throws Exception {
-
         Optional<Persona> pAux = Optional.of(persona);
         when(personaRepo.findById(persona.getId())).thenReturn(pAux.empty());
+        doNothing().when(personaRepo).deleteById(anyInt());
         assertThrows(Exception.class, () -> personaServ.deletePersona(anyInt()));
     }
 
     @Test
     void testDeletePersonaFail2() throws Exception {
-
         Optional<Imagen> iAux = Optional.of(persona.getImg());
         when(imagenRepo.findById(persona.getImg().getId())).thenReturn(iAux.empty());
+        doNothing().when(personaRepo).deleteById(anyInt());
         assertThrows(Exception.class, () -> personaServ.deletePersona(anyInt()));
     }
-
-    
 
     @Test
     void testFindByFullidFail() throws Exception {

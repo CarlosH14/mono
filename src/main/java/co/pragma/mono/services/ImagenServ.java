@@ -53,7 +53,7 @@ public class ImagenServ {
             throw new Exception("Imagen information must be provided");
         }
         
-        if(person.isEmpty()){
+        if(!person.isPresent()){
             throw new Exception("Persona does not exist");
         }
         if(file.isEmpty()){
