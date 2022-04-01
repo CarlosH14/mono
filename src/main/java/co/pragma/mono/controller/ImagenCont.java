@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import co.pragma.mono.dto.ImagenDTO;
 import co.pragma.mono.model.Imagen;
 import co.pragma.mono.services.ImagenServ;
 import co.pragma.mono.services.PersonaServ;

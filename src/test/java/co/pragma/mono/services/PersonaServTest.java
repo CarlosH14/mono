@@ -82,7 +82,8 @@ public class PersonaServTest {
     void testFindByFullid() throws Exception {
         ArrayList<Persona> pArrayList = new ArrayList<>(Arrays.asList(persona)); 
         when(personaRepo.findByTipoidAndNumid(persona.getTipoid(),persona.getNumid())).thenReturn(pArrayList);
-        assertNotNull(personaServ.findByFullid(persona.getTipoid(),persona.getNumid()));
+        String requests = persona.getTipoid()+"&"+persona.getNumid();
+        assertNotNull(personaServ.findByFullid(requests));
 
     }
 
@@ -141,7 +142,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -156,7 +157,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -171,7 +172,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -186,7 +187,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -201,7 +202,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -216,7 +217,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -231,7 +232,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -246,7 +247,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -261,7 +262,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -276,7 +277,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -291,7 +292,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -306,7 +307,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     @Test
@@ -321,7 +322,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertEquals(persona2,personaServ.updatePersona(pDTO2));
+        assertEquals(persona2,personaServ.updatePersona(persona2.getId(),pDTO2));
     }
 
     // ----------------------------------------------------------------
@@ -349,7 +350,8 @@ public class PersonaServTest {
         ArrayList<Persona> pAux = new ArrayList<>(Arrays.asList(persona));
         pAux.clear();
         when(personaRepo.findByTipoidAndNumid(persona.getTipoid(),persona.getNumid())).thenReturn(pAux);
-        assertThrows(Exception.class, () -> personaServ.findByFullid(anyString(),anyLong()));
+        String requests = persona.getTipoid()+"&"+persona.getNumid();
+        assertThrows(Exception.class, () -> personaServ.findByFullid(requests));
     }
 
     @Test
@@ -501,7 +503,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -515,7 +517,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -529,7 +531,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -543,7 +545,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -557,7 +559,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -571,7 +573,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -585,7 +587,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -599,7 +601,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -613,7 +615,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -627,7 +629,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -641,7 +643,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -655,7 +657,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -669,7 +671,7 @@ public class PersonaServTest {
         when(mongoRepo.save(imagenMongo)).thenReturn(imagenMongo);
         when(personaRepo.save(persona2)).thenReturn(persona2);
         assertFalse(pDTO.equals(pDTO2));
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
     @Test
@@ -680,7 +682,7 @@ public class PersonaServTest {
         
         when(personaRepo.findById(pDTO2.getId())).thenReturn(Optional.empty());
         
-        assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
+        assertThrows(Exception.class, () -> personaServ.updatePersona(persona.getId(),pDTO2));
     }
 
 }

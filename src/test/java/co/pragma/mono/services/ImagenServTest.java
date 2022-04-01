@@ -116,7 +116,7 @@ public class ImagenServTest {
         when(personaRepo.findById(imagen.getPersonid())).thenReturn(Optional.of(persona));
         when(personaRepo.save(any(Persona.class))).thenReturn(persona);
         ImagenDTO iDTO = imagenMapper.ImagenToImagenDTO(imagen);
-        assertNotNull(imagenServ.saveImagen(iDTO, mFile));
+        assertNotNull(imagenServ.saveImagen(iDTO.getId(), mFile));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ImagenServTest {
         when(personaRepo.save(persona)).thenReturn(persona);
 
         assertNotEquals(iDTO,iDTO2);
-        assertEquals(imagen2,imagenServ.updateImagen(imagen.getId(),iDTO2, mFile2));
+        assertEquals(imagen2,imagenServ.updateImagen(imagen.getId(),iDTO2.getPersonid(), mFile2));
    
     }
 
@@ -170,7 +170,7 @@ public class ImagenServTest {
         //when(imagenRepo.save(any(Imagen.class))).thenReturn(imagen);
         when(personaRepo.findById(imagen.getPersonid())).thenReturn(Optional.of(pAux));
         
-        assertThrows(Exception.class, () -> imagenServ.saveImagen(iDTO, mFile));
+        assertThrows(Exception.class, () -> imagenServ.saveImagen(iDTO.getId(), mFile));
    
     }
 
@@ -185,7 +185,7 @@ public class ImagenServTest {
         Optional<Persona> pPersona = Optional.of(persona);
         when(imagenRepo.save(any(Imagen.class))).thenReturn(imagen);
         when(personaRepo.findById(imagen.getPersonid())).thenReturn(pPersona);
-        assertThrows(Exception.class, () -> imagenServ.saveImagen(pDTO, imfile));
+        assertThrows(Exception.class, () -> imagenServ.saveImagen(pDTO.getId(), imfile));
    
     }
 
@@ -206,7 +206,7 @@ public class ImagenServTest {
         when(personaRepo.save(persona)).thenReturn(persona);
 
         assertNotEquals(iDTO,iDTO2);
-        assertThrows(Exception.class, () -> imagenServ.updateImagen(imagen.getId(),iDTO2, mFile2));
+        assertThrows(Exception.class, () -> imagenServ.updateImagen(imagen.getId(),iDTO2.getPersonid(), mFile2));
    
     }
     
