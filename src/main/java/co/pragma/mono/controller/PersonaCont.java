@@ -66,9 +66,7 @@ public class PersonaCont {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Persona> updatePersona(@PathVariable("id") int id, @RequestBody PersonaDTO pDTO) throws java.lang.Exception {
-        
-        pDTO.setId(id);
-        Persona p =  serv.updatePersona(pDTO);
+        Persona p =  serv.updatePersona(id, pDTO);
         return new ResponseEntity<Persona>(p, (HttpStatus.ACCEPTED));
     }
     // ----------------------------------------------------------------
@@ -144,10 +142,7 @@ public class PersonaCont {
     })
     @GetMapping("/p/{requests}")
     public ResponseEntity<ArrayList<Persona>> findByFullid(@PathVariable("requests") String requests) throws java.lang.Exception{
-        String[] req = requests.split("&");
-        Long numid = Long.parseLong(req[1]);
-        String tipoid = req[0];
-        ArrayList<Persona> pAux = serv.findByFullid(tipoid, numid);
+        ArrayList<Persona> pAux = serv.findByFullid(requests);
         return new ResponseEntity<ArrayList<Persona>>(pAux, (HttpStatus.FOUND));
     }
 

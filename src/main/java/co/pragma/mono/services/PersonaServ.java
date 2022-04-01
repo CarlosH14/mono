@@ -65,8 +65,8 @@ public class PersonaServ {
     }
     // ----------------------------------------------------------------
     // -------------------Update---------------------------------------
-    public Persona updatePersona(PersonaDTO pDTO) throws Exception{
-        int id = pDTO.getId();
+    public Persona updatePersona(int id, PersonaDTO pDTO) throws Exception{
+        pDTO.setId(id);
         
         Optional<Persona> pAux = personaRepo.findById(id);
 
@@ -172,7 +172,11 @@ public class PersonaServ {
     }
     // ----------------------------------------------------------------
     // ------Get by type & number id {persona} {/XX&####}--------------
-    public ArrayList<Persona> findByFullid(String tipoid, Long numeroid) throws Exception{
+    public ArrayList<Persona> findByFullid(String requests) throws Exception{
+        String[] req = requests.split("&");
+        Long numeroid = Long.parseLong(req[1]);
+        String tipoid = req[0];
+        
         ArrayList<Persona> pAux = personaRepo.findByTipoidAndNumid(tipoid, numeroid);
         if (pAux.isEmpty()) {
             throw new Exception("Persona with ID " + numeroid + " and ID Type " + tipoid + " is not found");
@@ -183,7 +187,7 @@ public class PersonaServ {
     // -------------------Delete by id {table}-------------------------
     public boolean deletePersona(int id) throws Exception{
         Optional<Persona> p = personaRepo.findById(id);
-        Optional<Imagen> i = imagenRepo.findById(p.get().getImg().getId());
+        Optional<Imagen> i = imagenRepo.findByPersonid(id);
         if(!p.isPresent()){
             throw new Exception("Persona with ID " + id + " not found");
         }

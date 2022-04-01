@@ -1,6 +1,10 @@
 package co.pragma.mono.services;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,11 +45,35 @@ public class ImagenServ {
         if (pAux.isEmpty()) {
             throw new Exception("Table Imagen is empty");
         }
-        return (ArrayList<Imagen>) imagenRepo.findAll();
+        return (ArrayList<Imagen>) pAux;
+    }
+    // ----------------------------------------------------------------
+    // -------------------List all Mongo-------------------------------------
+    public ArrayList<Imagen> getAllImagenMongo() throws Exception{
+        List<ImagenMongo> pAux = mongoRepo.findAll();
+        List<Imagen> shas = new ArrayList<Imagen>();
+        pAux.forEach((iMongo)->{
+            MessageDigest shaConverter;
+            try {
+                shaConverter = MessageDigest.getInstance("SHA-1");
+                shaConverter.reset();
+                shaConverter.update(iMongo.getPhoto().toString().getBytes("UTF-8"));
+                String sha1 =  String.format("%040x", new BigInteger(1, shaConverter.digest()));
+                shas.add(new Imagen(Integer.valueOf(iMongo.getId()), iMongo.getImagen().getPersonid(), sha1));
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        });
+        if (pAux.isEmpty()) {
+            throw new Exception("Table Imagen is empty");
+        }
+        return (ArrayList<Imagen>) shas;
     }
     // ----------------------------------------------------------------
     // -------------------Save new-------------------------------------
-    public Imagen saveImagen(ImagenDTO pDTO, MultipartFile file) throws Exception{
+    public Imagen saveImagen(int id, MultipartFile file) throws Exception{
+        ImagenDTO pDTO = new ImagenDTO();
+        pDTO.setPersonid(id);
         Imagen p = imagenMapper.ImagenDTOToImagen(pDTO);
         Optional<Persona> person = personaRepo.findById(p.getPersonid());
         p.setImg(person.get().getNombre() + " " + person.get().getApellido());
@@ -79,7 +107,10 @@ public class ImagenServ {
     }
     // ----------------------------------------------------------------
     // -------------------Update---------------------------------------
-    public Imagen updateImagen(int id, ImagenDTO pDTO, MultipartFile file) throws Exception{
+    public Imagen updateImagen(int id, int personid, MultipartFile file) throws Exception{
+        ImagenDTO pDTO = new ImagenDTO();
+        pDTO.setId(id);
+        pDTO.setPersonid(personid);
         Imagen p = imagenMapper.ImagenDTOToImagen(pDTO);
         Optional<Persona> person = personaRepo.findById(p.getPersonid());
         if (!person.isPresent()) {
@@ -122,6 +153,22 @@ public class ImagenServ {
         ImagenMongo imongo = mongoRepo.findById(Integer.toString(imagenRepo.findById(id).get().getId())).get();
         System.out.println(imongo);
         return imagenRepo.findById(id);
+    }
+    // ----------------------------------------------------------------
+    // -------------------Get Mongo by id {table}----------------------------
+    public Imagen getbyIdMongo(String id) throws Exception{
+        Optional<ImagenMongo> pAux = mongoRepo.findById(id);
+        if (!pAux.isPresent()) {
+            throw new Exception("Imagen with id " + id + " not found");
+        }
+        Imagen sha;
+        MessageDigest shaConverter;
+        shaConverter = MessageDigest.getInstance("SHA-1");
+        shaConverter.reset();
+        shaConverter.update(pAux.get().getPhoto().toString().getBytes("UTF-8"));
+        String sha1 =  String.format("%040x", new BigInteger(1, shaConverter.digest()));
+        sha = new Imagen(Integer.valueOf(pAux.get().getId()), pAux.get().getImagen().getPersonid(), sha1);
+        return sha;
     }
     // ----------------------------------------------------------------
     // -------------------Delete by id {table}-------------------------

@@ -4,14 +4,12 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -24,8 +22,6 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import co.pragma.mono.dto.PersonaDTO;
 import co.pragma.mono.dto.PersonaMapper;
@@ -334,16 +330,16 @@ public class PersonaServTest {
 
     @Test
     void testDeletePersonaFail() throws Exception {
-        Optional<Persona> pAux = Optional.of(persona);
-        when(personaRepo.findById(persona.getId())).thenReturn(pAux.empty());
+        //Optional<Persona> pAux = Optional.of(persona);
+        when(personaRepo.findById(persona.getId())).thenReturn(Optional.empty());
         doNothing().when(personaRepo).deleteById(anyInt());
         assertThrows(Exception.class, () -> personaServ.deletePersona(anyInt()));
     }
 
     @Test
     void testDeletePersonaFail2() throws Exception {
-        Optional<Imagen> iAux = Optional.of(persona.getImg());
-        when(imagenRepo.findById(persona.getImg().getId())).thenReturn(iAux.empty());
+        //Optional<Imagen> iAux = Optional.of(persona.getImg());
+        when(imagenRepo.findById(persona.getImg().getId())).thenReturn(Optional.empty());
         doNothing().when(personaRepo).deleteById(anyInt());
         assertThrows(Exception.class, () -> personaServ.deletePersona(anyInt()));
     }
@@ -392,7 +388,7 @@ public class PersonaServTest {
     @Test
     void testGetbyIdFail() throws Exception{
         Optional<Persona> pAux = Optional.of(persona);
-        when(personaRepo.findById(pAux.get().getId())).thenReturn(pAux.empty());
+        when(personaRepo.findById(pAux.get().getId())).thenReturn(Optional.empty());
         assertThrows(Exception.class, () -> personaServ.getbyId(anyInt()));
     }
 
@@ -680,9 +676,9 @@ public class PersonaServTest {
     void testUpdatePersonaFailPresent() throws Exception {
         Persona persona2 = new Persona(888,"NameTest2","LastNameTest2","CityTest2",88,"TypeTest2",88888L,imagen);
         PersonaDTO pDTO2 = personaMapper.PersonaToPersonaDTO(persona2);
-        Optional<Persona> pAux = Optional.of(persona2);
+        //Optional<Persona> pAux = Optional.of(persona2);
         
-        when(personaRepo.findById(pDTO2.getId())).thenReturn(pAux.empty());
+        when(personaRepo.findById(pDTO2.getId())).thenReturn(Optional.empty());
         
         assertThrows(Exception.class, () -> personaServ.updatePersona(pDTO2));
     }

@@ -1,6 +1,6 @@
 package co.pragma.mono.services;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -17,8 +17,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
-
-import javax.annotation.processing.Filer;
 
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
@@ -137,7 +135,7 @@ public class ImagenServTest {
         when(mongoRepo.save(imagenMongo2)).thenReturn(imagenMongo2);
         when(personaRepo.save(persona)).thenReturn(persona);
 
-        assertFalse(iDTO.equals(iDTO2));
+        assertNotEquals(iDTO,iDTO2);
         assertEquals(imagen2,imagenServ.updateImagen(imagen.getId(),iDTO2, mFile2));
    
     }
@@ -157,7 +155,7 @@ public class ImagenServTest {
     @Test
     void testGetbyIdFail() throws Exception {
         Optional<Imagen> iAux = Optional.of(imagen);
-        when(imagenRepo.findById(iAux.get().getId())).thenReturn(iAux.empty());
+        when(imagenRepo.findById(iAux.get().getId())).thenReturn(Optional.empty());
         assertThrows(Exception.class, () -> imagenServ.getbyId(anyInt()));
     
     }
@@ -207,7 +205,7 @@ public class ImagenServTest {
         when(mongoRepo.save(imagenMongo2)).thenReturn(imagenMongo2);
         when(personaRepo.save(persona)).thenReturn(persona);
 
-        assertFalse(iDTO.equals(iDTO2));
+        assertNotEquals(iDTO,iDTO2);
         assertThrows(Exception.class, () -> imagenServ.updateImagen(imagen.getId(),iDTO2, mFile2));
    
     }

@@ -46,6 +46,18 @@ public class ImagenCont {
         return new ResponseEntity<ArrayList<Imagen>>(imagenServ.getAllImagen(), (HttpStatus.FOUND));
     }
     // ----------------------------------------------------------------
+    // -------------------List all Mongo-------------------------------------
+    @Operation(summary = "List all Imagenes in the database")
+    @ApiResponses({
+        @ApiResponse(responseCode = "302", description = "FOUND", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Table Imagen is empty", content = @Content),
+    })
+    @GetMapping("/mongo")
+    public ResponseEntity<ArrayList<Imagen>> getAllImagenMongo() throws Exception {
+        return new ResponseEntity<ArrayList<Imagen>>(imagenServ.getAllImagenMongo(), (HttpStatus.FOUND));
+    }
+    // ----------------------------------------------------------------
+    
     // -------------------Save new-------------------------------------
     @Operation(summary = "Save a new Imagen in the database")
     @ApiResponses({
@@ -54,10 +66,8 @@ public class ImagenCont {
     })
     @PostMapping
     public ResponseEntity<Imagen> saveImagen(@RequestParam("id") int id, @RequestParam("photo") MultipartFile file) throws Exception {
-        ImagenDTO pDTO = new ImagenDTO();
-        pDTO.setPersonid(id);
-        Imagen p = imagenServ.saveImagen(pDTO, file);
-        return new ResponseEntity<Imagen>(p, (HttpStatus.CREATED));
+        Imagen i = imagenServ.saveImagen(id, file);
+        return new ResponseEntity<Imagen>(i, (HttpStatus.CREATED));
     }
     // ----------------------------------------------------------------
     // -------------------Update---------------------------------------
@@ -68,11 +78,8 @@ public class ImagenCont {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Imagen> updateImagen(@PathVariable("id") int id, @RequestParam("personid") int personid, @RequestParam("photo") MultipartFile file) throws Exception {
-        ImagenDTO pDTO = new ImagenDTO();
-        pDTO.setId(id);
-        pDTO.setPersonid(personid);
-        Imagen p = imagenServ.updateImagen(id, pDTO, file);
-        return new ResponseEntity<Imagen>(p, (HttpStatus.CREATED));
+        Imagen i = imagenServ.updateImagen(id, personid, file);
+        return new ResponseEntity<Imagen>(i, (HttpStatus.CREATED));
     }
     // ----------------------------------------------------------------
     // -------------------Get by id {table}----------------------------
@@ -83,16 +90,23 @@ public class ImagenCont {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Imagen> getbyId(@PathVariable("id") int id) throws Exception {
-        Imagen pAux = imagenServ.getbyId(id).get();
-        return new ResponseEntity<Imagen>(pAux, (HttpStatus.FOUND));
-    
-        //ImagenMongo imongo = mrepo.findById(Integer.toString(imagenServ.getbyId(id).get().getId())).get();
-        //System.out.println(imongo);
-        //System.out.println(Base64.encode(imongo.getPhoto().getData()));
-        //String imageBase64 = new String(Base64.encode(imongo.getPhoto().getData()));
-        //return imagenServ.getbyId(id).get();
+        Imagen iAux = imagenServ.getbyId(id).get();
+        return new ResponseEntity<Imagen>(iAux, (HttpStatus.FOUND));
     }
     // ----------------------------------------------------------------
+    // -------------------Get by Mongo id {table}----------------------------
+    @Operation(summary = "Get a Imagen by his Mongo Document ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "302", description = "FOUND", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Imagen not found", content = @Content),
+    })
+    @GetMapping("/mongo/{id}")
+    public ResponseEntity<Imagen> getbyIdMongo(@PathVariable("id") String id) throws Exception {
+        Imagen iAux = imagenServ.getbyIdMongo(id);
+        return new ResponseEntity<Imagen>(iAux, (HttpStatus.FOUND));
+    }
+    // ----------------------------------------------------------------
+    
     // -------------------Delete by id {table}-------------------------
     @Operation(summary = "Delete Imagen by his Table ID")
     @ApiResponses({
