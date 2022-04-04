@@ -116,14 +116,14 @@ public class ImagenServTest {
         when(personaRepo.findById(imagen.getPersonid())).thenReturn(Optional.of(persona));
         when(personaRepo.save(any(Persona.class))).thenReturn(persona);
         ImagenDTO iDTO = imagenMapper.ImagenToImagenDTO(imagen);
-        assertNotNull(imagenServ.saveImagen(iDTO.getId(), mFile));
+        assertNotNull(imagenServ.saveImagen(iDTO.getPersonid(), mFile));
     }
 
     @Test
     void testUpdateImagen() throws Exception {
 
         ImagenDTO iDTO = imagenMapper.ImagenToImagenDTO(imagen);
-        Imagen imagen2 = new Imagen(777,"NameTest LastNameTest");
+        Imagen imagen2 = imagen;
         ImagenDTO iDTO2 = imagenMapper.ImagenToImagenDTO(imagen2);
         File file2 = new File("C:/Users/carlos.hincapie/Downloads/DF11/10090.png");
         MultipartFile mFile2 = new MockMultipartFile("10090.png", Files.readAllBytes(Paths.get(file2.getPath())));
@@ -135,8 +135,8 @@ public class ImagenServTest {
         when(mongoRepo.save(imagenMongo2)).thenReturn(imagenMongo2);
         when(personaRepo.save(persona)).thenReturn(persona);
 
-        assertNotEquals(iDTO,iDTO2);
-        assertEquals(imagen2,imagenServ.updateImagen(imagen.getId(),iDTO2.getPersonid(), mFile2));
+        assertNotEquals(imagenMongo,imagenMongo2);
+        assertEquals(imagen2,imagenServ.updateImagen(iDTO2.getId(),iDTO.getPersonid(), mFile2));
    
     }
 

@@ -55,7 +55,7 @@ public class ImagenServ {
         pAux.forEach((iMongo)->{
             MessageDigest shaConverter;
             try {
-                shaConverter = MessageDigest.getInstance("SHA-1");
+                shaConverter = MessageDigest.getInstance("SHA-1"); //Crypto HASH Function - Hex 40 chars
                 shaConverter.reset();
                 shaConverter.update(iMongo.getPhoto().toString().getBytes("UTF-8"));
                 String sha1 =  String.format("%040x", new BigInteger(1, shaConverter.digest()));
